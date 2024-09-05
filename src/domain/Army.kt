@@ -1,9 +1,6 @@
 package domain
 
 import domain.battle.BattleResult
-import domain.units.Archer
-import domain.units.Knight
-import domain.units.Pikemen
 import java.util.*
 
 class Army(
