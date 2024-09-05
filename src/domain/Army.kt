@@ -8,9 +8,7 @@ import java.util.*
 
 class Army(
     private val id: UUID,
-    val pikemen: MutableList<Pikemen> = mutableListOf(),
-    val archers: MutableList<Archer> = mutableListOf(),
-    val knights: MutableList<Knight> = mutableListOf(),
+    val units: MutableList<Unit>,
     val battleHistory: MutableList<BattleResult> = mutableListOf(),
     private var gold: Int,
     val name: String
@@ -33,23 +31,18 @@ class Army(
     }
 
     fun totalStrength(): Int {
-        return pikemen.sumOf { it.strength } +
-                archers.sumOf { it.strength } +
-                knights.sumOf { it.strength }
+        return units.sumOf { it.strength }
+
     }
 
     fun applyLossPenalty() {
-        val allUnits = archers + pikemen + knights
-
-        val strongestUnits = allUnits.sortedByDescending { it.strength }.take(2)
+        val strongestUnits = units.sortedByDescending { it.strength }.take(2)
 
         strongestUnits.forEach { removeUnit(it) }
     }
 
     fun applyDrawPenalty() {
-        val allUnits = archers + pikemen + knights
-
-        val strongestUnits = allUnits.sortedByDescending { it.strength }.take(1)
+        val strongestUnits = units.sortedByDescending { it.strength }.take(1)
 
         strongestUnits.forEach { removeUnit(it) }
     }
@@ -72,24 +65,14 @@ class Army(
     }
 
     private fun findUnitById(id: UUID): Unit? {
-        return pikemen.find { it.id == id }
-            ?: archers.find { it.id == id }
-            ?: knights.find { it.id == id }
+        return units.find { it.id == id }
     }
 
     private fun removeUnit(unit: Unit) {
-        when (unit) {
-            is Pikemen -> pikemen.remove(unit)
-            is Archer -> archers.remove(unit)
-            is Knight -> knights.remove(unit)
-        }
+        units.remove(unit)
     }
 
     private fun addUnit(unit: Unit) {
-        when (unit) {
-            is Pikemen -> pikemen.add(unit)
-            is Archer -> archers.add(unit)
-            is Knight -> knights.add(unit)
-        }
+        units.add(unit)
     }
 }

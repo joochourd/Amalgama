@@ -2,6 +2,9 @@ package domain.battle
 
 import builder.ArmyBuilder
 import builder.UnitBuilder
+import domain.units.Archer
+import domain.units.Knight
+import domain.units.Pikemen
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 
@@ -36,7 +39,7 @@ class BattleResultTest {
         val chineseArmy = builder.buildChineseArmy()
         val englishArmy = builder.buildEnglishArmy()
         val battlefield = Battlefield()
-        val firstKnight = chineseArmy.knights.first()
+        val firstKnight = chineseArmy.units.first { it is Knight }
 
         //when
         repeat(20) {
@@ -61,11 +64,11 @@ class BattleResultTest {
 
         //when
         repeat(2) {
-            val pikemen = chineseArmy.pikemen.first()
+            val pikemen = chineseArmy.units.first{it is Pikemen } as Pikemen
             chineseArmy.transformUnit(pikemen)
         }
         repeat(5) {
-            val archer = chineseArmy.archers.first()
+            val archer = chineseArmy.units.first{it is Archer } as Archer
             chineseArmy.transformUnit(archer)
         }
         battlefield.fight(chineseArmy, englishArmy)

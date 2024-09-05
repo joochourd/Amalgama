@@ -13,12 +13,13 @@ class ArmyBuilder(val unitBuilder: UnitBuilder) {
     }
 
     fun buildChineseArmy(): Army {
+        val pikemen = buildPikemen(2)
+        val archers = buildArchers(25)
+        val knights = buildKnights(2)
         val army = Army(
             name = "Chinese",
             id = UUID.randomUUID(),
-            pikemen = buildPikemen(2),
-            archers = buildArchers(25),
-            knights = buildKnights(2),
+            units = (pikemen + archers + knights).toMutableList(),
             battleHistory = mutableListOf(),
             gold = INITIAL_GOLD,
         )
@@ -27,11 +28,12 @@ class ArmyBuilder(val unitBuilder: UnitBuilder) {
     }
 
     fun buildEnglishArmy(): Army {
+        val pikemen = buildPikemen(10)
+        val archers = buildArchers(10)
+        val knights = buildKnights(10)
         val army = Army(
             id = UUID.randomUUID(),
-            pikemen = buildPikemen(10),
-            archers = buildArchers(10),
-            knights = buildKnights(10),
+            units = (pikemen + archers + knights).toMutableList(),
             battleHistory = mutableListOf(),
             gold = INITIAL_GOLD,
             name = "English",
@@ -41,11 +43,13 @@ class ArmyBuilder(val unitBuilder: UnitBuilder) {
     }
 
     fun buildByzantinesArmy(): Army {
+        val pikemen = buildPikemen(5)
+        val archers = buildArchers(8)
+        val knights = buildKnights(15)
+
         val army = Army(
             id = UUID.randomUUID(),
-            pikemen = buildPikemen(5),
-            archers = buildArchers(8),
-            knights = buildKnights(15),
+            units = (pikemen + archers + knights).toMutableList(),
             battleHistory = mutableListOf(),
             gold = INITIAL_GOLD,
             name = "Byzantines",
